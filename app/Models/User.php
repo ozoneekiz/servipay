@@ -40,6 +40,12 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'profile_photo_url',
+        'profile_photo_path',
+        'email_verified_at',
+        'current_team_id',
+        'two_factor_confirmed_at',
+        'updated_at'
     ];
 
     /**
@@ -49,6 +55,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'created_at' => 'datetime:Y-m-d / h:m:s',
     ];
 
     /**

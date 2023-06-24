@@ -1,10 +1,19 @@
-<x-app-layout>
-    <x-slot name="header">
+<x-admin-layout>
+   {{--  <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}
         </h2>
-    </x-slot>
-
+    </x-slot> --}}
+   
+        <x-slot name="estilos">
+          <!-- estilos de perfil -->
+                <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <!-- Scripts de perfil -->
+                <script src="{{ asset('js/app.js') }}" defer></script>
+                
+         </x-slot>
+    <x-slot name="pagetitle">Configurarcion de usuario</x-slot>
+    <x-slot name="script">@livewireScripts</x-slot>
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
@@ -42,4 +51,4 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+</x-admin-layout>

@@ -1,0 +1,47 @@
+.content-title{
+    padding: 5px 0px 0px 10px;
+}
+.pagetitle{
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    text-transform: uppercase;
+    
+}
+.custom-bg{
+    background-image: linear-gradient(to right top, #d3d3d3, #dedede, #e9e9e9, #f4f4f4, #ffffff);
+}
+.custom-bg2{
+    background-image: linear-gradient(to right top, #6c757d, #6c757d, #969ca1, #787d84, #6c757d);
+    color: #f4f4f4;
+    
+    
+}
+.bordered { 
+   /*  border: solid #ccc 1px; */ 
+    -moz-border-radius: 20px; 
+    -webkit-border-radius: 20px; 
+    border-radius: 6px; 
+    -webkit-box-shadow: 0 3px #ccc; 
+    -moz-box-shadow: 0 3px #ccc; 
+  
+    box-shadow: rgba(137, 137, 137, 0.24) 0px 8px 15px;
+}
+
+
+.table thead th {
+    border-bottom: 0px !important;
+    font-weight: normal!important;
+    padding: 6px 10px;
+    white-space: nowrap;
+    font-size: 1rem;
+}
+
+table.dataTable {
+   margin: 15px 0px!important;
+   clear: both;
+   
+   border-bottom: 0px !important;
+}
+
+/* boton darckmode*/
