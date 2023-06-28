@@ -40,8 +40,19 @@
 table.dataTable {
    margin: 15px 0px!important;
    clear: both;
-   
    border-bottom: 0px !important;
 }
+.dataTables_wrapper tbody tr:hover{ 
+    background-color: #a7e0ff;
+}
+
+.dark-mode .dataTables_wrapper .dt-button{
+    color: #fff;
+    background-color: #868686;
+}
+.dark-mode .dataTables_wrapper td a{
+    color: #e9e9e9;
+}
+
 
 /* boton darckmode*/

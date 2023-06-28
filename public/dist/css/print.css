@@ -9,7 +9,7 @@
         border-bottom: 2px double #777!important;
         background-color: #777;
         color:#ffffff;
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
     .dt-print-view .acciones{
         display: none;
@@ -21,15 +21,19 @@
    .dt-print-view h1{
         font-size: 25px;
     }
-    .dt-print-view tbody tr:nth-child(odd) {
-        background-color: #f2f2f2!important;
+    .dt-print-view tbody td{
+        background-color: #ffffff;
+        border-bottom: 2px solid #888!important;
+
         
     }    
-   /*  .dt-print-view table {
-        border-left: 1px solid #888;
-        border-right: 1px solid #888;
+    .dt-print-view table {
+        border-left: 2px solid #888;
+        border-right: 2px solid #888;
         border-bottom: 1px solid #888;
-    } */
+    }
+    
+    
 
     @media print {
         * {
@@ -45,14 +49,15 @@
       margin-bottom: 15mm;
     }
   
-    .dt-print-view thead th{
-        border-top: 2px double#777!important;
-        border-bottom: 2px double #777!important;
-        background-color: #777;
-        color:#ffffff;
-        font-size: 1.2rem;
-    }
+    
+    .dt-print-view tbody tr{
+        background-color: #ffffff;
+        
+    }  
          
+
+
+    
      
     
   }

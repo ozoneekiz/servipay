@@ -47,7 +47,8 @@
             </ul>
           </li> --}}
           <li class="nav-item">
-            <a href="{{ url('users') }}" class="nav-link">
+            //
+            <a href="{{ route('users') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Usuarios

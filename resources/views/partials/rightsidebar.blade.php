@@ -1,14 +1,13 @@
 <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
     <div class="p-3">
-        <h5>Configuracion de usuario;</h5>
+        <h5>Configuracion de usuario</h5>
 
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-            <div class="shrink-0 mr-3">
-                <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
-                    alt="{{ Auth::user()->name }}" />
+            <div class="text-center mb-3">
+                <img class="" src="{{ Auth::user()->profile_photo_url }}"
+                    alt="{{ Auth::user()->name }}" width="120px"/>
             </div>
-            <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-full h-20 w-20 object-cover">
 
         @endif
 

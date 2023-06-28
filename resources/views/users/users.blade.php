@@ -10,7 +10,7 @@
 <x-admin-layout>
     <x-slot name="titulo">Usuarios</x-slot>
     <table id="table" class="stripe hover bordered">
-        
+
         <thead class="custom-bg2">
             <tr>
                 <th>id</th>
@@ -22,62 +22,67 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody >
+        <tbody>
 
         </tbody>
     </table>
-
-    <div class="modal" tabindex="-1" id="modal">
+   
+         
+    <div class="modal fade"  id="modal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                   
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                </div>
-                <div class="modal-body">
+                <form id="form">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
 
-                    <form action="" method="POST" id="form">
-                        @csrf
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </div>
+                    <div class="modal-body">
+
+
                         
-                        <input type="hidden" class="form-control" id="id" name="id" >
+                        @csrf
+                        {{-- <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}"> --}}
+                        <input type="hidden" id="id" name="id">
 
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name" name="name" 
+                            <input type="text" class="form-control" id="name" name="name"
+                                pattern="[a-zA-ZáéíóúüñÑ\s]{3,255}" title="El nombre solo debe contener letras"
                                 required>
                         </div>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" 
-                                required>
+                            <input type="text" class="form-control" id="username" name="username"
+                                pattern="[a-zA-ZáéíóúüñÑ_]{3,255}"
+                                title="El UserName solo debe contener letras y guiones bajos" required>
                         </div>
                         <div class="mb-3">
                             <label for="role" class="form-label">Rol</label>
-                            <input type="text" class="form-control" id="role" name="role" 
-                                required>
+                            <input type="text" class="form-control" id="role" name="role"
+                                pattern="[a-zA-ZáéíóúüñÑ]{3,30}" title="El Rol solo debe contener letras" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo</label>
-                            <input type="text" class="form-control" id="email" name="email" 
-                                required>
+                            <input type="email" class="form-control" id="email" name="email" required>
                         </div>
-                    </form>
-                </div>
-                <div class="content-errors d-none">  
-                    <div class="message_errors col-11 mx-auto"></div><br>
-                    <div class=" alert alert-danger col-11 mx-auto">
-                        <ul class="validate_errors">
-                        
-                        </ul>
+
                     </div>
-                </div>  
-                   
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary btn-save" disabled>Guardar Cambios</button>
-                </div>
+                    <div class="content-errors d-none">
+                        <div class="message_errors col-11 mx-auto"></div><br>
+                        <div class=" alert alert-danger col-11 mx-auto">
+                            <ul class="validate_errors">
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary btn-save" disabled >Guardar Cambios</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -86,56 +91,42 @@
 
 <script>
     $(document).ready(function() {
-        let model ={nombre:'usuario'};
-        let accion = '';
+        // Inicializamos las variables para el datatable y funciones
+        let model = {
+            model: 'user',
+            nombre: 'usuario',
+            route: '/user',
+            actions_col: 6
+        };
+       
+        let csrf = $('input[name="_token"]').val();
+        // Inicializamos las variables para tipo de envio por ajax en Store record
         let method = '';
-        let url = '';
-
-
+       
         // Iniciamos el datatable
         let table = $('#table').DataTable({
             autoWidth: false,
             dom: 'Bfrtip',
-
-            "buttons": [
-                {
-                    text: 'Crear '+ model.nombre,
+            "deferRender": true,
+          
+            "buttons": [{
+                    text: 'Crear ' + model.nombre,
                     className: 'text-white bg-primary',
-                    action: function ( e, dt, node, config ) {
-                        newRecord();
+                    action: function(e, dt, node, config) {
+                        method = 'POST';
+                        create_New_Record(model.route, model);
+                        console.log(method+' ---- '+url);
                     }
                 },
-                {
-                    extend: 'print',
-                    text: 'Imprimir',
-                    autoPrint: false,
-                    messageTop: 'MensajeTop',
-                    messageBotton: '<div class="bg-olive" >Mesaje abajo</div>',
-                    exportOptions: {
-                        columns: ':visible'
-                    },
-                    customize: function(win) {
-                        $(win.document.body).find('h1')
-                            //.css( 'font-size', '10pt' )
-                            .before('<div>esta es una prueba before</div>')
-                            .after('<div >esta es una prueba after</div>')
-                            .prepend(
-                                '<div>esta es una prueba dentro prepend</div>'
-                            );
-
-                        //$(win.document.body).find( 'table' )
-                        //.removeClass( 'table' )
-                        //.css( 'font-size', 'inherit' );
-                    }
-                },
-                "copy", "excel", "colvis", 'pageLength'
+                data_Table_Top_Button(model)
             ],
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
             },
             "ajax": {
-                "url": "{{ route('user.index') }}",
-                "dataSrc": ""
+                "url": model.route,
+                "dataSrc": "",
+                              
             },
             "columns": [{
                     "data": "id"
@@ -165,107 +156,102 @@
 
                 },
                 {
-                    "targets": [6],
-                    "className": 'd-print-none acciones',
-
+                    "targets": [1],
                     "render": function(data, type, row) {
-                        return `
-                                <button type="button" class="btn btn-primary btn-sm btn-edit">Editar</button>
-                                <button type="button" class="btn btn-primary btn-sm btn-delete" id=${data}>Eliminar</button>
-                            `;
+                        return `<a href="${model.route}/${row['id']}">${data}</a>`;
                     }
-                }
+                },
+                render_actions_Buttons({
+                    "model": model.model,
+                    "view": true, //default false
+                    "edit": true,
+                    "destroy": true,
+                })
             ]
         });
-        let csrf = $('input[name="_token"]').val();
-        // Create record
-        function newRecord() {
-            accion = 'crear';
-            method = 'POST';
-            url = 'user';
-            clean_validate_errors();
-            clean_form_input();
-            $('#modal').modal('show');
-            $('.modal-title').text('Crear '+ model.nombre);
-           
-            activate_button_on_input_change();
-        };
-        
+
         // Edit record
         $(document).on("click", ".btn-edit", function() {
-            
+
             clean_validate_errors();
-            $('#modal').modal('show');
-            $('.modal-title').text('Editar '+ model.nombre);
+            
 
             let data = ($(this).parents('tr').hasClass('child')) ?
                 table.row($(this).parents().prev('tr')).data() :
                 table.row($(this).parents('tr')).data()
 
-            $('#id').val(data['id']);
-            $('#name').val(data['name']);
-            $('#username').val(data['username']);
-            $('#role').val(data['role']);
-            $('#email').val(data['email']);
-            
-            accion = 'actulizar';
-            method = 'PUT';
-            url = 'user/' + data['id'];
+            ;
+            /*  $('#id').val(data['id']);
+             $('#name').val(data['name']);
+             $('#username').val(data['username']);
+             $('#role').val(data['role']);
+             $('#email').val(data['email']); */
 
+            load_Input_for_edit(data);
+
+            $('#modal').modal('show');
+            $('.modal-title').text('Editar ' + model.nombre + ' Id: ' + data['id']);
+
+            accion = 'actualizar';
+            method = 'PUT';
+            url = model.route +'/'+data['id'];
             activate_button_on_input_change();
         });
-        // Save record
-        $('.modal-footer').on('click', '.btn-save', function() {
+
+        // Store record
+        $(document).on('click', '.btn-save', function() {
+            no_send_form(idform = '#form');
+
             let form = document.getElementById('form');
             
             if (form.checkValidity()) {
+
                 showConfirmSwal({
                     accion: accion,
                     entidad: model.nombre,
-                    id:     $('#id').val(),
-                    name:   $('#name').val(),
+                    id: $('#id').val(),
+                    name: $('#name').val(),
                 }).then(confirm => {
-                if (confirm == null) {
-                    return
-                }
+                    if (confirm == null) {
+                        return
+                    }
+                    let data = $('#form').serialize();
+
                     $.ajax({
                         type: method,
                         url: url,
-                        data: {
-                            '_token': csrf,
-                            'id': $('#id').val(),
-                            'name': $('#name').val(),
-                            'username': $('#username').val(),
-                            'role': $('#role').val(),
-                            'email': $('#email').val(),
-                        },
+                        data: data,
                         success: function(data) {
-                            swal_message_response(data) ? table.ajax.reload():null
+                            swal_message_response(data) ? table.ajax.reload() : null
                         },
                         error: function(errors) {
                             show_validate_errors(errors);
                         }
                     });
                 })
-            }else{
-                alert('no valido');
             }
         });
-        // Delete a record
+
+        // Destroy record
         $(document).on("click", ".btn-delete", function() {
             let user_id = $(this).attr('id');
+            
 
-            showConfirmSwal({accion:'eliminar',entidad:'usuario',id:user_id }).then(confirm => {
+            showConfirmSwal({
+                accion: 'eliminar',
+                entidad: 'usuario',
+                id: user_id
+            }).then(confirm => {
                 if (confirm == null) {
                     return
                 }
                 $.ajax({
-                    url: 'user/' + user_id,
+                    url: model.route +'/'+ user_id,
                     type: "DELETE",
                     data: {
                         _token: csrf
                     },
-                    //dataType: 'json',
+                   
                     success: function(respuesta) {
                         swal_message_response(respuesta) ? table.ajax.reload() :
                             null
