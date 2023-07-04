@@ -6,53 +6,45 @@
     font-weight: bold;
     color: #000;
     text-transform: uppercase;
-    
 }
-.custom-bg{
-    background-image: linear-gradient(to right top, #d3d3d3, #dedede, #e9e9e9, #f4f4f4, #ffffff);
+
+
+/* Custom table styles */
+table .custom-bg{
+    background-image: linear-gradient(to top, #d3d3d3, #dadada, #e1e1e1, #e8e8e8, #efefef,  #efefef, #e8e8e8, #e1e1e1, #dadada, #d3d3d3);
 }
-.custom-bg2{
-    background-image: linear-gradient(to right top, #6c757d, #6c757d, #969ca1, #787d84, #6c757d);
-    color: #f4f4f4;
-    
-    
-}
+
 .bordered { 
    /*  border: solid #ccc 1px; */ 
     -moz-border-radius: 20px; 
     -webkit-border-radius: 20px; 
-    border-radius: 6px; 
-    -webkit-box-shadow: 0 3px #ccc; 
-    -moz-box-shadow: 0 3px #ccc; 
-  
-    box-shadow: rgba(137, 137, 137, 0.24) 0px 8px 15px;
+    border-radius: 15px; 
 }
 
-
-.table thead th {
-    border-bottom: 0px !important;
-    font-weight: normal!important;
-    padding: 6px 10px;
-    white-space: nowrap;
-    font-size: 1rem;
+table thead th {
+ color: #505050;
+ border-bottom: 0px !important;
 }
 
 table.dataTable {
    margin: 15px 0px!important;
-   clear: both;
    border-bottom: 0px !important;
 }
+
 .dataTables_wrapper tbody tr:hover{ 
-    background-color: #a7e0ff;
+    background-color: #dbf2ff;
 }
 
 .dark-mode .dataTables_wrapper .dt-button{
     color: #fff;
     background-color: #868686;
 }
+.dark-mode .dataTables_wrapper .buttons-columnVisibility{
+    color: #363636;
+}
 .dark-mode .dataTables_wrapper td a{
     color: #e9e9e9;
 }
 
 
-/* boton darckmode*/
+
