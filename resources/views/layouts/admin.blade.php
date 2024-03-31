@@ -25,7 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Scripts de perfil -->
   <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="sidebar-mini sidebar-collapse">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -98,7 +98,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <!-- SweetAlert2 -->
 {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
-<script src="plugins/sweetalert2/sweetalert2.all.js"></script>
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.all.js') }}"></script>
 <!-- shared functions -->
 <script src="{{ asset('js/shared.js') }}" defer></script>
 <!-- datatable buttons -->

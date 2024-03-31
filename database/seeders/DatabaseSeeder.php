@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Asociado;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,5 +16,8 @@ class DatabaseSeeder extends Seeder
     {
         //\App\Models\User::factory(100)->create();
         $this->call(UsersSeeder::class);
+        $this->call(AsociadosSeeder::class);
+
+        
     }
 }

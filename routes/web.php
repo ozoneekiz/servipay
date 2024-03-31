@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AsociadoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Models\Asociado;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,5 +45,14 @@ Route::middleware([
     // aqui debe ir edit
     route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+    // insititucion
+
+    Route::get('/institucion', function () {return view('institucion.Home');})->name('institucion.home');
+    Route::get('/institucion/asociados', function () {return view('institucion.asociados');})->name('asociados');
+    Route::get('/asociado',[AsociadoController::class, 'index'])->name('asociados.index');
+    route::put('/asociado/{id}', [AsociadoController::class, 'update'])->name('asociado.update');
+    route::post('/asociado', [AsociadoController::class, 'store'])->name('asociado.store'); 
+    route::delete('/asociado/{id}', [AsociadoController::class, 'destroy'])->name('asociado.destroy');
 
 });

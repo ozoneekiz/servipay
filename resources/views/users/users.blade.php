@@ -146,6 +146,7 @@
             let data = ($(this).parents('tr').hasClass('child')) ?
                 table.row($(this).parents().prev('tr')).data() :
                 table.row($(this).parents('tr')).data();
+                console.log(data);   
 
             load_Input_for_edit(data);
 

@@ -22,15 +22,16 @@ function showConfirmSwal({
     name = "",
     message = "",
     icon = "question",
+    reference = "",
 }) {
     if (accion == "crear") {
         message = `Se creara el ${entidad}: <b> ${name}</b>`;
     }
     if (accion == "actualizar") {
-        message = `El ${entidad}: <b>${id}</b> se actualizará con los datos ingresados`;
+        message = `El ${entidad}: <b>${name}</b> se actualizará con los datos ingresados`;
     }
     if (accion == "eliminar") {
-        message = `Esta acción no se puede deshacer, eliminará el ${entidad} <b>${id}  ${name}</b> y todos sus registros asociados`;
+        message = `Esta acción no se puede deshacer,<br> eliminará el <b>${entidad} : ${reference}</b>  con <b>id nro: ${id}  </b><br> y todos sus registros asociados`;
     }
 
     return Swal.fire({
@@ -118,8 +119,7 @@ function activate_button_on_input_change() {
     });
     $("#modal select").change(function () {
         $(".btn-save").prop("disabled", false);
-    }
-    );
+    });
 }
 function clean_form_input() {
     $(':input:not([name="_token"],#id)').val("");
@@ -141,10 +141,12 @@ function darkmode() {
 }
 
 function destroy_record(id, model, csrf, table) {
+    //old functions 
     showConfirmSwal({
         accion: "eliminar",
         entidad: model.nombre,
         id: id,
+
     }).then((confirm) => {
         if (confirm == null) {
             return;
@@ -161,7 +163,37 @@ function destroy_record(id, model, csrf, table) {
         });
     });
 }
-
+function destroy_register(data) {
+    
+    showConfirmSwal({
+        accion: "eliminar",
+        entidad: data.model.nombre,
+        id: data.id,
+        reference: data.reference
+    }).then((confirm) => {
+      if (confirm == null) {
+        return;
+      }
+  
+      const ajaxdata = {
+        accion: "destroy",
+        csrf: data.csrf,
+        id: data.id,
+      };
+      $.ajax({
+        url: data.model.route + "/" + data.id,
+            type: "DELETE",
+            data: {
+                _token: data.csrf,
+        },
+        success: function (respuesta) {
+          // error succes por seccess
+          swal_message_response(respuesta) ? data.table.ajax.reload() : null;
+        },
+      });
+    });
+  }
+  
 /* DATATABLE FUNCTIONS */
 function create_New_Record(route, model) {
     accion = "Crear";
@@ -170,7 +202,7 @@ function create_New_Record(route, model) {
     clean_validate_errors();
     clean_form_input();
     $("#modal").modal("show");
-    $(".modal-title").text("Crear " + model.nombre);
+    $("#modal.modal-title").text("Crear " + model.nombre);
     activate_button_on_input_change();
 }
 
@@ -232,6 +264,94 @@ function render_actions_Buttons({
                 buttons += `<button type="button" class="btn btn-primary btn-sm btn-delete" id=${data}>Eliminar</button>`;
             }
             return buttons;
+        },
+    };
+}
+function render_actions_drow_Buttons({
+    model = false,
+    col = -1,
+    view = false,
+    print = false,
+    edit = false,
+    destroy = false,
+    custom1 = false,
+    custom2 = false,
+    custom3 = false,
+    custom4 = false,
+    custom5 = false,
+    custom6 = false,
+
+}) {
+    return {
+        targets: [col],
+        className: "d-print-none acciones",
+
+        render: function (data, type, row) {
+            if (!model) {
+                return "Error: no se especifico el modelo<b> {model: 'modelo'}</b>";
+            }
+
+            let buttons = "";
+            let custom_buttons = "";
+
+            if (view) {
+                buttons += `<a class="dropdown-item" href="${model.route}/${data}">Ver</a>`;
+            }
+            if (print) {
+                buttons += `<a class="dropdown-item btn-print" id=${data}>Imprimir</a>`;
+            }
+            if (edit) {
+                buttons += `<a  class="dropdown-item btn-edit">Editar</a>`;
+            }
+            if (destroy) {
+                buttons += `<a  class="dropdown-item btn-delete" id="${data}" ${model.nombre}="${row[model.reference]}" >Eliminar</a>`;
+            }
+            if (custom1) {
+                custom_buttons += `<a class="dropdown-item  ${custom1.handler}" id=${data}">
+                             ${custom1.icon} ${custom1.namebutton}
+                            </a>`;
+            }
+            if (custom2) {
+                custom_buttons += `<a class="dropdown-item  ${custom2.handler}" id=${data}">
+                             ${custom2.icon} ${custom2.namebutton}
+                            </a>`;
+            }
+            if (custom3) {
+                custom_buttons += `<a class="dropdown-item  ${custom3.handler}" id=${data}">
+                             ${custom3.icon} ${custom3.namebutton}
+                            </a>`;
+            }
+            if (custom4) {
+                custom_buttons += `<a class="dropdown-item  ${custom4.handler}" id=${data}">
+                             ${custom4.icon} ${custom4.namebutton}
+                            </a>`;
+            }
+            if (custom5) {
+                custom_buttons += `<a class="dropdown-item  ${custom5.handler}" id=${data}">
+                             ${custom5.icon} ${custom5.namebutton}
+                            </a>`;
+            }
+            if (custom6) {
+                custom_buttons += `<a class="dropdown-item  ${custom6.handler}" id=${data}">
+                             ${custom6.icon} ${custom6.namebutton}
+                            </a>`;
+            }
+
+            let dropdown = `
+            <div class="btn-group">
+                    <button type="button" class="btn btn-primary">Acciones</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown">
+                    <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu" role="menu">
+                        ${buttons}
+                   
+                    <div class="dropdown-divider"></div>
+                        ${custom_buttons}
+                    </div>
+                    </div>
+            `;
+            return dropdown;
         },
     };
 }

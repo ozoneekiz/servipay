@@ -1,4 +1,4 @@
-<nav class="main-header navbar navbar-expand custom-bg navbar-light">
+<nav class="main-header navbar navbar-expand navbar-olive navbar-dark border-0">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -9,9 +9,7 @@
                 <div class="pagetitle">{{ $titulo ?? 'Dashboard' }}</div>
             </a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
-        </li>
+        {{ $menu ?? '' }}
     </ul>
 
     <!-- Right navbar links -->

@@ -1,8 +1,8 @@
-<div class="modal fade" id="modal">
-    <div class="modal-dialog">
+<div class="modal fade" id="{{ $id ?? 'modal' }}" tabindex="0">
+    <div class="modal-dialog {{ $size ?? '' }}">
         <div class="modal-content">
             <form id="form">
-                <div class="modal-header">
+                <div class="modal-header bg-olive">
                     <h5 class="modal-title">Modal title</h5>
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -25,7 +25,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary btn-save" disabled>Guardar Cambios</button>
+                    <button type="submit" class="btn bg-olive btn-save" disabled>Guardar Cambios</button>
                 </div>
             </form>
         </div>
